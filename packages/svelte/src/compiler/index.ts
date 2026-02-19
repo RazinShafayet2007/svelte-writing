@@ -1,10 +1,10 @@
 
 import type { LegacyRoot } from './types/legacy-nodes.js';
 import type {
-	CompileOptions,
-	CompileResult,
-	ValidatedCompileOptions,
-	ModuleCompileOptions
+    CompileOptions,
+    CompileResult,
+    ValidatedCompileOptions,
+    ModuleCompileOptions
 } from '#compiler';
 import type { AST } from './public.js';
 
@@ -24,5 +24,16 @@ export { print } from './print/index.js';
 export function compile(source: string, options: CompileOptions): CompileResult {
     source = remove_bom(source);
     state.reset({ warning: options.warningFilter, filename: options.filename });
-	const validated = validate_component_options(options, '');
+    const validated = validate_component_options(options, '');
+
+    let parsed = _parse(source);
+
+    const { customElement: customElementOptions, ...parsed_options } = parsed.options || {};
+
+    const combined_options: ValidatedCompileOptions = {
+        ...validated,
+        ...parsed_options,
+        customElementOptions
+    };
+
 }
