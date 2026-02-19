@@ -50,4 +50,8 @@ export function compile(source: string, options: CompileOptions): CompileResult 
 		}
 	}
 
+    const analysis = analyze_component(parsed, source, combined_options);
+	const result = transform_component(analysis, source, combined_options);
+	result.ast = to_public_ast(source, parsed, options.modernAst);
+	return result;
 }
