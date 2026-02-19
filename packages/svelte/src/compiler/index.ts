@@ -20,3 +20,9 @@ import * as state from './state.js';
 
 export { default as preprocess } from './preprocess/index.js';
 export { print } from './print/index.js';
+
+export function compile(source: string, options: CompileOptions): CompileResult {
+    source = remove_bom(source);
+    state.reset({ warning: options.warningFilter, filename: options.filename });
+	const validated = validate_component_options(options, '');
+}
