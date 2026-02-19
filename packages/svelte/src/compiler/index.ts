@@ -36,4 +36,18 @@ export function compile(source: string, options: CompileOptions): CompileResult 
         customElementOptions
     };
 
+    if (parsed.metadata.ts) {
+		parsed = {
+			...parsed,
+			fragment: parsed.fragment && remove_typescript_nodes(parsed.fragment),
+			instance: parsed.instance && remove_typescript_nodes(parsed.instance),
+			module: parsed.module && remove_typescript_nodes(parsed.module)
+		};
+		if (combined_options.customElementOptions?.extend) {
+			combined_options.customElementOptions.extend = remove_typescript_nodes(
+				combined_options.customElementOptions?.extend
+			);
+		}
+	}
+
 }
