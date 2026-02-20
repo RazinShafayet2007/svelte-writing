@@ -150,3 +150,6 @@ export function walk(): never {
 		`'svelte/compiler' no longer exports a \`walk\` utility — please import it directly from 'estree-walker' instead`
 	);
 }
+
+export { VERSION } from '../version.js';
+export { migrate } from './migrate/index.js';
