@@ -141,3 +141,12 @@ function remove_bom(source: string) {
 	}
 	return source;
 }
+
+/**
+ * @deprecated Replace this with `import { walk } from 'estree-walker'`
+ */
+export function walk(): never {
+	throw new Error(
+		`'svelte/compiler' no longer exports a \`walk\` utility — please import it directly from 'estree-walker' instead`
+	);
+}
