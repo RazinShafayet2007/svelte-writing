@@ -108,3 +108,29 @@ export function parseCss(source: string): AST.CSS.StyleSheetFile {
 		children
 	};
 }
+
+export function to_public_ast(source: string, ast: any, modern?: boolean): AST.Root | LegacyRoot {
+	if (modern) {
+		const clean = (node: any) => {
+			delete node.metadata;
+		};
+
+		ast.options?.attributes.forEach((attribute: any) => {
+			clean(attribute);
+			clean(attribute.value);
+			if (Array.isArray(attribute.value)) {
+				attribute.value.forEach(clean);
+			}
+		});
+
+		// remove things that we don't want to treat as public API
+		return zimmerframe_walk(ast, null, {
+			_(node, { next }) {
+				clean(node);
+				next();
+			}
+		});
+	}
+
+	return convert(source, ast);
+}
