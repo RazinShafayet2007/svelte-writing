@@ -55,3 +55,12 @@ export function compile(source: string, options: CompileOptions): CompileResult 
 	result.ast = to_public_ast(source, parsed, options.modernAst);
 	return result;
 }
+
+export function compileModule(source: string, options: ModuleCompileOptions): CompileResult {
+	source = remove_bom(source);
+	state.reset({ warning: options.warningFilter, filename: options.filename });
+	const validated = validate_module_options(options, '');
+
+	const analysis = analyze_module(source, validated);
+	return transform_module(analysis, source, validated);
+}
