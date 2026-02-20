@@ -91,3 +91,20 @@ export function parse(source: string, { modern, loose }: ParseOptions = {}): AST
 	const ast = _parse(source, loose);
 	return to_public_ast(source, ast, modern);
 }
+
+export function parseCss(source: string): AST.CSS.StyleSheetFile {
+	source = remove_bom(source);
+	state.reset({ warning: () => false, filename: undefined });
+
+	state.set_source(source);
+
+	const parser = Parser.forCss(source);
+	const children = parse_stylesheet(parser);
+
+	return {
+		type: 'StyleSheetFile',
+		start: 0,
+		end: source.length,
+		children
+	};
+}
