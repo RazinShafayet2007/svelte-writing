@@ -134,3 +134,10 @@ export function to_public_ast(source: string, ast: any, modern?: boolean): AST.R
 
 	return convert(source, ast);
 }
+
+function remove_bom(source: string) {
+	if (source.charCodeAt(0) === 0xfeff) {
+		return source.slice(1);
+	}
+	return source;
+}
