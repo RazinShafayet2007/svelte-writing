@@ -64,3 +64,30 @@ export function compileModule(source: string, options: ModuleCompileOptions): Co
 	const analysis = analyze_module(source, validated);
 	return transform_module(analysis, source, validated);
 }
+
+export interface ParseOptions {
+	/**
+	 * Unused and will be removed in Svelte 6.0.
+	 * Kept here only for compatibility with the existing API surface.
+	 */
+	filename?: string;
+	rootDir?: string;
+	modern?: boolean;
+	loose?: boolean;
+}
+
+// Overloads
+export function parse(source: string, options: { filename?: string; modern: true; loose?: boolean }): AST.Root;
+export function parse(
+  source: string,
+  options?: { filename?: string; modern?: false; loose?: boolean }
+): Record<string, any>;
+
+// Implementation
+export function parse(source: string, { modern, loose }: ParseOptions = {}): AST.Root | LegacyRoot {
+	source = remove_bom(source);
+	state.reset({ warning: () => false, filename: undefined });
+
+	const ast = _parse(source, loose);
+	return to_public_ast(source, ast, modern);
+}
