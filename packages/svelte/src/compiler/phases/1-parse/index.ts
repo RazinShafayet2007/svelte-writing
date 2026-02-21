@@ -20,3 +20,10 @@ const regex_lang_attribute =
 	/<!--[^]*?-->|<script\s+(?:[^>]*|(?:[^=>'"/]+=(?:"[^"]*"|'[^']*'|[^>\s]+)\s+)*)lang=(["'])?([^"' >]+)\1[^>]*>/g;
 
 export class Parser {}
+
+export function parse(template: string, loose: boolean = false): AST.Root {
+	state.set_source(template);
+
+	const parser = new Parser(template, loose);
+	return parser.root;
+}
