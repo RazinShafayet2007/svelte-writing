@@ -55,6 +55,11 @@ export class Parser {
 	meta_tags: Record<string, boolean> = {};
 
 	last_auto_closed_tag: LastAutoClosedTag | undefined;
+
+	constructor(template: string, loose: boolean) {
+		if (typeof template !== 'string') {
+			throw new TypeError('Template must be a string');
+		}
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
