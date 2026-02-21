@@ -42,6 +42,19 @@ export class Parser {
 		parser.loose = false;
 		return parser;
 	}
+
+	/** Whether we're parsing in TypeScript mode */
+	ts = false;
+
+	stack: AST.TemplateNode[] = [];
+
+	fragments: AST.Fragment[] = [];
+
+	root!: AST.Root;
+
+	meta_tags: Record<string, boolean> = {};
+
+	last_auto_closed_tag: LastAutoClosedTag | undefined;
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
