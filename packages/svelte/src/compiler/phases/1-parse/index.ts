@@ -60,6 +60,9 @@ export class Parser {
 		if (typeof template !== 'string') {
 			throw new TypeError('Template must be a string');
 		}
+
+		this.loose = loose;
+		this.template = template.trimEnd();
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
