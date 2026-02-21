@@ -27,3 +27,11 @@ export function parse(template: string, loose: boolean = false): AST.Root {
 	const parser = new Parser(template, loose);
 	return parser.root;
 }
+
+type ParserState = (parser: Parser) => ParserState | void;
+
+interface LastAutoClosedTag {
+	tag: string;
+	reason: string;
+	depth: number;
+}
