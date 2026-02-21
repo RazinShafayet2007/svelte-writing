@@ -30,6 +30,18 @@ export class Parser {
 	loose: boolean;
 
 	index = 0;
+
+	/**
+	 * Creates a minimal parser instance for CSS-only parsing.
+	 * Skips Svelte component parsing setup.
+	 */
+	static forCss(source: string): Parser {
+		const parser = Object.create(Parser.prototype) as Parser;
+		parser.template = source;
+		parser.index = 0;
+		parser.loose = false;
+		return parser;
+	}
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
