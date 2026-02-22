@@ -88,6 +88,9 @@ export class Parser {
 				ts: this.ts
 			}
 		};
+
+	this.stack.push(this.root);
+	this.fragments.push(this.root.fragment);
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
