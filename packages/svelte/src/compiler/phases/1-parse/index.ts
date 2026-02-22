@@ -65,6 +65,9 @@ export class Parser {
 		this.template = template.trimEnd();
 
 		let match_lang: RegExpExecArray | null;
+
+		do match_lang = regex_lang_attribute.exec(template);
+		while (match_lang && match_lang[0][1] !== 's'); // ensure it starts with '<s' to match script tags
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
