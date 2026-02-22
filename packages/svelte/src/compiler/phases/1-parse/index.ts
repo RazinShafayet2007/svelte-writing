@@ -89,15 +89,29 @@ export class Parser {
 			}
 		};
 
-	this.stack.push(this.root);
-	this.fragments.push(this.root.fragment);
+		this.stack.push(this.root);
+		this.fragments.push(this.root.fragment);
 
-	let state: ParserState = fragment;
+		let state: ParserState = fragment;
 
-	while (this.index < this.template.length) {
-		state = state(this) || fragment;
+		while (this.index < this.template.length) {
+			state = state(this) || fragment;
+		}
+
+		if (this.stack.length > 1) {
+			const current = this.current();
+
+			if (this.loose) {
+				(current as any).end = this.template.length;
+			} else if ((current as any).type === 'RegularElement') {
+				(current as any).end = (current as any).start + 1;
+				e.element_unclosed(current as any, (current as any).name);
+			} else {
+				(current as any).end = (current as any).start + 1;
+				e.block_unclosed(current as any);
+			}
+		}
 	}
-}
 
 export function parse(template: string, loose: boolean = false): AST.Root {
 	state.set_source(template);
