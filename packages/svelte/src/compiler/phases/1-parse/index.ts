@@ -68,6 +68,8 @@ export class Parser {
 
 		do match_lang = regex_lang_attribute.exec(template);
 		while (match_lang && match_lang[0][1] !== 's'); // ensure it starts with '<s' to match script tags
+
+		regex_lang_attribute.lastIndex = 0; // reset matched index to pass tests - otherwise declare the regex inside the constructor
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
