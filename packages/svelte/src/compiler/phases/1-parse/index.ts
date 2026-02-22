@@ -72,6 +72,22 @@ export class Parser {
 		regex_lang_attribute.lastIndex = 0; // reset matched index to pass tests - otherwise declare the regex inside the constructor
 
 		this.ts = match_lang?.[2] === 'ts';
+
+		this.root = {
+			css: null,
+			js: [],
+			// @ts-ignore
+			start: null,
+			// @ts-ignore
+			end: null,
+			type: 'Root',
+			fragment: create_fragment(),
+			options: null,
+			comments: [],
+			metadata: {
+				ts: this.ts
+			}
+		};
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
