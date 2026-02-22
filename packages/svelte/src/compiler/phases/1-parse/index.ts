@@ -63,6 +63,8 @@ export class Parser {
 
 		this.loose = loose;
 		this.template = template.trimEnd();
+
+		let match_lang: RegExpExecArray | null;
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
