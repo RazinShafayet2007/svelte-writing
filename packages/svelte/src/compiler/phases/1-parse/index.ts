@@ -91,6 +91,8 @@ export class Parser {
 
 	this.stack.push(this.root);
 	this.fragments.push(this.root.fragment);
+
+	let state: ParserState = fragment;
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
