@@ -93,6 +93,10 @@ export class Parser {
 	this.fragments.push(this.root.fragment);
 
 	let state: ParserState = fragment;
+
+	while (this.index < this.template.length) {
+		state = state(this) || fragment;
+	}
 }
 
 export function parse(template: string, loose: boolean = false): AST.Root {
